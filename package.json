@@ -1,0 +1,30 @@
+{
+  "name": "web_project_around_express",
+  "version": "1.0.0",
+  "description": "\"comienzo de backend\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZergioMendoza/web_project_around_express.git"
+  },
+  "author": "sergio mendoza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZergioMendoza/web_project_around_express/issues"
+  },
+  "homepage": "https://github.com/ZergioMendoza/web_project_around_express#readme",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
