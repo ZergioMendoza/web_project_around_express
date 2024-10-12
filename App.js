@@ -1,38 +1,17 @@
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
+
+// Importa las rutas de usuarios y tarjetas
+const userRoutes = require('./routes/Users');
+const cardsRoutes = require('./routes/Cards');
 
 const app = express();
 
-// Ruta para obtener todos los usuarios
-app.get('/users', (req, res) => {
-  const usersPath = path.join(__dirname, 'data', 'users.json');
-  fs.readFile(usersPath, 'utf8', (err, data) => {
-    if (err) {
-      res.status(500).send({ message: 'Error al leer el archivo' });
-      return;
-    }
-    res.send(JSON.parse(data));
-  });
-});
+// Middleware para parsear JSON
+app.use(express.json());
 
-// Ruta para obtener un usuario por ID
-app.get('/users/:id', (req, res) => {
-  const usersPath = path.join(__dirname, 'data', 'users.json');
-  fs.readFile(usersPath, 'utf8', (err, data) => {
-    if (err) {
-      res.status(500).send({ message: 'Error al leer el archivo' });
-      return;
-    }
-    const users = JSON.parse(data);
-    const user = users.find((u) => u._id === req.params.id);
-    if (!user) {
-      res.status(404).send({ message: 'ID de usuario no encontrado' });
-      return;
-    }
-    res.send(user);
-  });
-});
+// Usa las rutas de usuarios y tarjetas
+app.use('/users', userRoutes);
+app.use('/cards', cardsRoutes);
 
 // Ruta para manejar cualquier otra URL no existente
 app.use((req, res) => {
