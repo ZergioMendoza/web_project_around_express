@@ -1,40 +1,50 @@
-// routes/Users.js
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
-
-// Crea un router de Express
+const User = require('../models/User');
 const router = express.Router();
 
-// Ruta para obtener todos los usuarios
-router.get('/', (req, res) => {
-  const usersPath = path.join(__dirname, '../data', 'users.json');
-  fs.readFile(usersPath, 'utf8', (err, data) => {
-    if (err) {
-      res.status(500).send({ message: 'Error al leer el archivo' });
-      return;
-    }
-    res.send(JSON.parse(data));
-  });
-});
-
-// Ruta para obtener un usuario por ID
-router.get('/:id', (req, res) => {
-  const usersPath = path.join(__dirname, '../data', 'users.json');
-  fs.readFile(usersPath, 'utf8', (err, data) => {
-    if (err) {
-      res.status(500).send({ message: 'Error al leer el archivo' });
-      return;
-    }
-    const users = JSON.parse(data);
-    const user = users.find((u) => u._id === req.params.id);
-    if (!user) {
-      res.status(404).send({ message: 'ID de usuario no encontrado' });
-      return;
-    }
+// Ruta para actualizar el perfil
+router.patch('/me', async (req, res) => {
+  const { name, about } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, about },
+      { new: true }
+    ).orFail(() => {
+      const error = new Error("Usuario no encontrado");
+      error.statusCode = 404;
+      throw error; // Arroja un error si no se encuentra el usuario
+    });
     res.send(user);
-  });
+  } catch (err) {
+    if (err.statusCode) {
+      return res.status(err.statusCode).send({ message: err.message });
+    }
+    res.status(400).send({ message: 'Error al actualizar el perfil', error: err.message });
+  }
 });
 
-// Exporta el router para que pueda ser usado en app.js
+// Ruta para actualizar el avatar
+router.patch('/me/avatar', async (req, res) => {
+  const { avatar } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { avatar },
+      { new: true }
+    ).orFail(() => {
+      const error = new Error("Usuario no encontrado");
+      error.statusCode = 404;
+      throw error; // Arroja un error si no se encuentra el usuario
+    });
+    res.send(user);
+  } catch (err) {
+    if (err.statusCode) {
+      return res.status(err.statusCode).send({ message: err.message });
+    }
+    res.status(400).send({ message: 'Error al actualizar el avatar', error: err.message });
+  }
+});
+
+// Exporta las rutas
 module.exports = router;
