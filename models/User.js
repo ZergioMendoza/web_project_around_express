@@ -1,31 +1,25 @@
 const mongoose = require('mongoose');
 
-// Define el esquema de usuario
+// Expresión regular corregida
+const urlRegex = /^(http|https):\/\/(www\.)?[a-zA-Z0-9._~:/?%#[\]@!$&'()*+,;=]+$/;
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
   },
   about: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
   },
   avatar: {
     type: String,
-    required: true,
     validate: {
-      validator: function(v) {
-        const urlRegex = /^(http|https):\/\/(www\.)?[a-zA-Z0-9._~:/?%#\[\]@!$&'()*+,;=]+$/;
-        return urlRegex.test(v);
-      },
-      message: props => `${props.value} no es un enlace válido!`
-    }
+      validator: (v) => urlRegex.test(v), // Asegúrate de que la validación funcione correctamente
+      message: (props) => `${props.value} no es una URL válida!`,
+    },
   },
-});
+}, { versionKey: false });
 
-// Exporta el modelo de usuario
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+module.exports = User;

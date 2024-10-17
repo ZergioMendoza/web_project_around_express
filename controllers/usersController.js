@@ -4,9 +4,9 @@ const User = require('../models/User');
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.status(200).send(users);
+    return res.status(200).send(users);
   } catch (err) {
-    res.status(500).send({ message: 'Error al obtener usuarios', error: err.message });
+    return res.status(500).send({ message: 'Error al obtener usuarios', error: err.message });
   }
 };
 
@@ -17,9 +17,9 @@ const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).send({ message: 'Usuario no encontrado' });
     }
-    res.status(200).send(user);
+    return res.status(200).send(user);
   } catch (err) {
-    res.status(500).send({ message: 'Error al obtener el usuario', error: err.message });
+    return res.status(500).send({ message: 'Error al obtener el usuario', error: err.message });
   }
 };
 
@@ -31,9 +31,9 @@ const createUser = async (req, res) => {
 
   try {
     await user.save();
-    res.status(201).send(user);
+    return res.status(201).send(user);
   } catch (err) {
-    res.status(400).send({ message: 'Error al crear el usuario', error: err.message });
+    return res.status(400).send({ message: 'Error al crear el usuario', error: err.message });
   }
 };
 

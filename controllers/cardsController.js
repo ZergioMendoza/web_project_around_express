@@ -1,26 +1,25 @@
-// controllers/cardsController.js
 const Card = require('../models/Card'); // Asegúrate de importar tu modelo de tarjeta
 
 // Obtener todas las tarjetas
 const getAllCards = async (req, res) => {
   try {
     const cards = await Card.find().populate('owner likes');
-    res.send(cards);
+    return res.send(cards); // Retornar las tarjetas obtenidas
   } catch (err) {
-    res.status(500).send({ message: 'Error al obtener tarjetas', error: err });
+    return res.status(500).send({ message: 'Error al obtener tarjetas', error: err }); // Retornar error si hay un problema
   }
 };
 
 // Crear una nueva tarjeta
 const createCard = async (req, res) => {
   const { name, link, owner } = req.body;
-  
+
   try {
     const card = new Card({ name, link, owner });
     await card.save();
-    res.status(201).send(card);
+    return res.status(201).send(card); // Retornar la tarjeta creada
   } catch (err) {
-    res.status(400).send({ message: 'Error al crear la tarjeta', error: err });
+    return res.status(400).send({ message: 'Error al crear la tarjeta', error: err }); // Retornar error si hay un problema
   }
 };
 
@@ -31,11 +30,11 @@ const deleteCard = async (req, res) => {
   try {
     const deletedCard = await Card.findByIdAndDelete(cardId);
     if (!deletedCard) {
-      return res.status(404).send({ message: 'Tarjeta no encontrada' });
+      return res.status(404).send({ message: 'Tarjeta no encontrada' }); // Retornar mensaje si no se encuentra la tarjeta
     }
-    res.send({ message: 'Tarjeta eliminada exitosamente' });
+    return res.send({ message: 'Tarjeta eliminada exitosamente' }); // Retornar mensaje de éxito
   } catch (err) {
-    res.status(500).send({ message: 'Error al eliminar tarjeta', error: err });
+    return res.status(500).send({ message: 'Error al eliminar tarjeta', error: err }); // Retornar error si hay un problema
   }
 };
 

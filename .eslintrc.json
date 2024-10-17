@@ -1,12 +1,13 @@
 {
-    "extends": "airbnb-base",
-    "env": {
-      "browser": true,
-      "es6": true,
-      "node": true
-    },
-    "rules": {
-      // Aquí puedes agregar reglas específicas, si lo deseas
-    }
+  "extends": "airbnb-base",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "linebreak-style": 0, // Desactiva la regla de estilo de línea (para evitar problemas en Windows)
+    "quotes": ["error", "single"], // Usa comillas simples
+    "semi": ["error", "always"]
   }
-  
+}

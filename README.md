@@ -1,29 +1,31 @@
 # Tripleten web_project_around_express
 
-## Seria genial que cuando se revise el proyecte se validen todos los errores, y no que sea rechazado una y otra ves por cosas que se pueden reparar en una sola correccion.
+# Proyecto API de Usuarios y Tarjetas
 
-Este proyecto es una API construida con **Node.js** y **Express** que maneja datos de usuarios y tarjetas. La API responde a varias solicitudes HTTP y devuelve información en formato JSON. También está configurada para reiniciarse automáticamente durante el desarrollo utilizando **Nodemon**.
+## Descripción
+Este proyecto es una API RESTful para gestionar usuarios y tarjetas, con funcionalidades para crear, actualizar, eliminar y dar likes a tarjetas.
 
+## Tecnologías utilizadas
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
 
+## Instrucciones de instalación
+1. Clonar el repositorio.
+2. Ejecutar `npm install` para instalar las dependencias.
+3. Iniciar MongoDB localmente o conectarlo a MongoDB Atlas.
+4. Ejecutar `npm run start` para iniciar el servidor.
 
+## Rutas de la API
 
-## Características
+### Usuarios:
+- `GET /users`: Devuelve todos los usuarios.
+- `PATCH /users/me`: Actualiza el perfil del usuario.
+- `PATCH /users/me/avatar`: Actualiza el avatar del usuario.
 
-- Devuelve una lista de todos los usuarios.
-- Devuelve una lista de todas las tarjetas.
-- Devuelve información de un usuario específico según su ID.
-- Maneja rutas no existentes con mensajes de error.
-
-## Requisitos previos
-
-Para ejecutar este proyecto localmente, asegúrate de tener instalado:
-
-- [Node.js](https://nodejs.org/) (versión 20 o superior)
-- [npm](https://www.npmjs.com/) (gestor de paquetes de Node.js)
-
-## Instalación
-
-1. Clona este repositorio:
-
-   ```bash
-   git clone https://github.com/usuario/proyecto.git
+### Tarjetas:
+- `GET /cards`: Devuelve todas las tarjetas.
+- `POST /cards`: Crea una nueva tarjeta.
+- `PUT /cards/:cardId/likes`: Dar like a una tarjeta.
+- `DELETE /cards/:cardId/likes`: Eliminar un like de una tarjeta.

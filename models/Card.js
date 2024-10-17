@@ -12,25 +12,25 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: function(v) {
-        const urlRegex = /^(http|https):\/\/(www\.)?[a-zA-Z0-9._~:/?%#\[\]@!$&'()*+,;=]+$/;
+      validator(v) {
+        const urlRegex = /^(http|https):\/\/(www\.)?[a-zA-Z0-9._~:/?%#@!$&'()*+,;=-]+$/; // Corregido el regex
         return urlRegex.test(v);
       },
-      message: props => `${props.value} no es un enlace válido!`
-    }
+      message: (props) => `${props.value} no es un enlace válido!`,
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'User',
   },
   likes: {
     type: [mongoose.Schema.Types.ObjectId],
-    default: []
+    default: [],
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 });
 
